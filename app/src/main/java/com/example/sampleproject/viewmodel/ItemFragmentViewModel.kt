@@ -22,7 +22,7 @@ class ItemFragmentViewModel(private val repository: Repository) : ViewModel() {
         get() = mutableLiveData
 
     fun getMostViewedArticles(apiKey: String) {
-        executeState(ItemFragmentViewState.ShowLoader)
+        mutableLiveData.value = ItemFragmentViewState.ShowLoader
         callApi(apiKey)
     }
 
@@ -36,23 +36,19 @@ class ItemFragmentViewModel(private val repository: Repository) : ViewModel() {
     }
 
     private fun onSuccess(response: Response) {
-        executeState(ItemFragmentViewState.HideLoader)
-        executeState(ItemFragmentViewState.LoadData(response))
+        mutableLiveData.value = ItemFragmentViewState.HideLoader
+        mutableLiveData.value = ItemFragmentViewState.LoadData(response)
     }
 
     private fun onError(throwable: Throwable) {
-        executeState(ItemFragmentViewState.HideLoader)
-        executeState(ItemFragmentViewState.HandleError(throwable))
-    }
-
-    private fun executeState(state: ItemFragmentViewState) {
-        mutableLiveData.value = state
+        mutableLiveData.value = ItemFragmentViewState.HideLoader
+        mutableLiveData.value = ItemFragmentViewState.HandleError(throwable)
     }
 
     @RestrictTo(RestrictTo.Scope.TESTS)
     public override fun onCleared() {
         super.onCleared()
         disposables.clear()
-        executeState(ItemFragmentViewState.OnCleared)
+        mutableLiveData.value = ItemFragmentViewState.OnCleared
     }
 }
