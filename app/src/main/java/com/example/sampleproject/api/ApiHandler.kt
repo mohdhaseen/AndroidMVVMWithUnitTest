@@ -1,5 +1,7 @@
 package com.example.sampleproject.network
 
+import com.example.sampleproject.api.ApiService
+
 
 /**
  * @author Mohd Haseen

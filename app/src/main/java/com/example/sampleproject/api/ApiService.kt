@@ -1,4 +1,4 @@
-package com.example.sampleproject.network
+package com.example.sampleproject.api
 
 import com.example.sampleproject.model.Response
 import io.reactivex.Single
