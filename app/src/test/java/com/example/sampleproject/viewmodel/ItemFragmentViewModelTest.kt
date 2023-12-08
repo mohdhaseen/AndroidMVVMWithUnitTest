@@ -46,8 +46,8 @@ class ItemFragmentViewModelTest {
     @Test
     fun loadDataWithSuccess() {
         val response = Response(status = "success")
-        every { repository.getMostViewedArticles(any()) } returns Single.just(response)
-        viewModel.getMostViewedArticles("")
+        every { repository.getMostViewedArticles() } returns Single.just(response)
+        viewModel.getMostViewedArticles()
         verify { stateObserver.onChanged(ItemFragmentViewState.ShowLoader)}
         verify { stateObserver.onChanged(ItemFragmentViewState.HideLoader)}
         Assert.assertEquals(viewModel.liveData.value, ItemFragmentViewState.LoadData(response))
@@ -56,8 +56,8 @@ class ItemFragmentViewModelTest {
     @Test
     fun loadDataWithError() {
         val response = Exception()
-        every { repository.getMostViewedArticles(any()) } returns Single.error(response)
-        viewModel.getMostViewedArticles("")
+        every { repository.getMostViewedArticles() } returns Single.error(response)
+        viewModel.getMostViewedArticles()
         verify { stateObserver.onChanged(ItemFragmentViewState.ShowLoader)}
         verify { stateObserver.onChanged(ItemFragmentViewState.HideLoader)}
         Assert.assertEquals(viewModel.liveData.value, ItemFragmentViewState.HandleError(response))

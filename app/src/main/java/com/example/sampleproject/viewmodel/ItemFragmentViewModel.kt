@@ -16,19 +16,19 @@ import io.reactivex.schedulers.Schedulers
  */
 class ItemFragmentViewModel(private val repository: Repository) : ViewModel() {
 
-    public val disposables = CompositeDisposable()
+    private val disposables = CompositeDisposable()
     private val mutableLiveData = MutableLiveData<ItemFragmentViewState>()
     val liveData: LiveData<ItemFragmentViewState>
         get() = mutableLiveData
 
-    fun getMostViewedArticles(apiKey: String) {
+    fun getMostViewedArticles() {
         mutableLiveData.value = ItemFragmentViewState.ShowLoader
-        callApi(apiKey)
+        callApi()
     }
 
-    private fun callApi(apiKey: String) {
+    private fun callApi() {
         disposables.add(
-            repository.getMostViewedArticles(apiKey)
+            repository.getMostViewedArticles()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onSuccess, this::onError)

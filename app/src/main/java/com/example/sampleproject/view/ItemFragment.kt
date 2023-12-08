@@ -21,7 +21,6 @@ import com.example.sampleproject.viewmodel.ItemFragmentViewModel
  */
 class ItemFragment : Fragment() {
 
-    val apiKey = "j0XjaRWTD643A1dfnomojk6ijDpn3NAO"// this is not the place to put api key although
     companion object {
         fun getInstance(): ItemFragment {
             return ItemFragment()
@@ -69,7 +68,7 @@ class ItemFragment : Fragment() {
 
     private fun initViewModel() {
         val viewModelFactory = ItemFragmentViewModelFactory()
-        viewModel = ViewModelProvider(requireActivity(), viewModelFactory)[ItemFragmentViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[ItemFragmentViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -82,7 +81,7 @@ class ItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         addObserver()
-        viewModel.getMostViewedArticles(apiKey)
+        viewModel.getMostViewedArticles()
     }
 
 }

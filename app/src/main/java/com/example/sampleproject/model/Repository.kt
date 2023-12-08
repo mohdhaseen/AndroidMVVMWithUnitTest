@@ -9,6 +9,6 @@ import io.reactivex.Single
  */
 interface Repository {
 
-    fun getMostViewedArticles(apiKey: String): Single<Response>
+    fun getMostViewedArticles(): Single<Response>
 
 }
