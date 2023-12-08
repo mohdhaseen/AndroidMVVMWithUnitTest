@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.aranoah.healthkart.plus.pharmacy.shipmentv2.ItemFragmentViewModelFactory
+import com.example.sampleproject.viewmodel.ItemFragmentViewModelFactory
 import com.example.sampleproject.ItemFragmentViewState
 import com.example.sampleproject.MyItemRecyclerViewAdapter
 import com.example.sampleproject.databinding.FragmentItemListBinding
+import com.example.sampleproject.model.ExecutorType
 import com.example.sampleproject.model.Response
-import com.example.sampleproject.viewmodel.ItemFragmentViewModel
+import com.example.sampleproject.viewmodel.ItemFragmentViewModelWithCoroutine
 
 /**
  * @author Mohd Haseen
@@ -25,9 +26,10 @@ class ItemFragment : Fragment() {
         fun getInstance(): ItemFragment {
             return ItemFragment()
         }
+        const val TAG = "ItemFragment"
     }
 
-    private lateinit var viewModel: ItemFragmentViewModel
+    private lateinit var viewModel: ItemFragmentViewModelWithCoroutine
     private lateinit var binding: FragmentItemListBinding
 
     private fun addObserver() {
@@ -54,8 +56,7 @@ class ItemFragment : Fragment() {
     }
 
     private fun handleError(throwable: Throwable) {
-        Log.d("haseen", throwable.toString())
-        // handle error
+        Log.d(TAG, throwable.toString())
     }
 
     private fun loadUI(response: Response) {
@@ -67,8 +68,8 @@ class ItemFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        val viewModelFactory = ItemFragmentViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory)[ItemFragmentViewModel::class.java]
+        val viewModelFactory = ItemFragmentViewModelFactory(ExecutorType.COROUTINE)
+        viewModel = ViewModelProvider(this, viewModelFactory)[ItemFragmentViewModelWithCoroutine::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

@@ -1,22 +1,21 @@
 package com.example.sampleproject.viewmodel
 
-import androidx.annotation.RestrictTo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.sampleproject.ItemFragmentViewState
 import com.example.sampleproject.model.Response
 import com.example.sampleproject.model.Repository
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * @author Mohd Haseen
  */
-class ItemFragmentViewModel(private val repository: Repository) : ViewModel() {
+class ItemFragmentViewModelWithCoroutine(private val repository: Repository) : ViewModel() {
 
-    private val disposables = CompositeDisposable()
     private val mutableLiveData = MutableLiveData<ItemFragmentViewState>()
     val liveData: LiveData<ItemFragmentViewState>
         get() = mutableLiveData
@@ -27,12 +26,17 @@ class ItemFragmentViewModel(private val repository: Repository) : ViewModel() {
     }
 
     private fun callApi() {
-        disposables.add(
-            repository.getMostViewedArticles()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSuccess, this::onError)
-        )
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val result = repository.getMostViewedArticlesWithCoroutine()
+                withContext(Dispatchers.Main) {
+                    onSuccess(result)
+                }
+            } catch (ex: Exception) {
+                withContext(Dispatchers.Main) {
+                onError(ex)}
+            }
+        }
     }
 
     private fun onSuccess(response: Response) {
@@ -40,15 +44,9 @@ class ItemFragmentViewModel(private val repository: Repository) : ViewModel() {
         mutableLiveData.value = ItemFragmentViewState.LoadData(response)
     }
 
-    private fun onError(throwable: Throwable) {
+    private fun onError(throwable: Throwable?) {
         mutableLiveData.value = ItemFragmentViewState.HideLoader
-        mutableLiveData.value = ItemFragmentViewState.HandleError(throwable)
+        mutableLiveData.value = throwable?.let { ItemFragmentViewState.HandleError(it) }
     }
 
-    @RestrictTo(RestrictTo.Scope.TESTS)
-    public override fun onCleared() {
-        super.onCleared()
-        disposables.clear()
-        mutableLiveData.value = ItemFragmentViewState.OnCleared
-    }
 }

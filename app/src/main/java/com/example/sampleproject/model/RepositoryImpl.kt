@@ -1,6 +1,7 @@
 package com.example.sampleproject.repository
 
 import com.example.sampleproject.BuildConfig
+import com.example.sampleproject.model.Repository
 import com.example.sampleproject.model.Response
 import com.example.sampleproject.network.ApiHandler
 import io.reactivex.Single
@@ -14,5 +15,9 @@ class RepositoryImpl : Repository {
 
     override fun getMostViewedArticles(): Single<Response> {
         return shipmentApi.getMostViewedArticles(BuildConfig.API_KEY)
+    }
+
+    override suspend fun getMostViewedArticlesWithCoroutine(): Response {
+        return shipmentApi.getMostViewedArticlesWithCoroutine(BuildConfig.API_KEY)
     }
 }

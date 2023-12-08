@@ -15,4 +15,7 @@ interface ApiService {
     @GET("svc/mostpopular/v2/viewed/1.json")
     fun getMostViewedArticles(@Query("api-key") apkiKey: String): Single<Response>
 
+    @GET("svc/mostpopular/v2/viewed/1.json")
+    suspend fun getMostViewedArticlesWithCoroutine(@Query("api-key") apkiKey: String): Response
+
 }

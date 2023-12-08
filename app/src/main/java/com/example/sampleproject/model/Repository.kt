@@ -1,4 +1,4 @@
-package com.example.sampleproject.repository
+package com.example.sampleproject.model
 
 import com.example.sampleproject.model.Response
 import io.reactivex.Single
@@ -10,5 +10,6 @@ import io.reactivex.Single
 interface Repository {
 
     fun getMostViewedArticles(): Single<Response>
+    suspend fun getMostViewedArticlesWithCoroutine(): Response
 
 }
