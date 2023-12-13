@@ -19,14 +19,14 @@ import androidx.compose.ui.Modifier
 import com.example.sampleproject.ViewStates
 import com.example.sampleproject.model.Response
 import com.example.sampleproject.view.ui.theme.SampleTheme
-import com.example.sampleproject.viewmodel.ItemFragmentViewModelWithCoroutine
+import com.example.sampleproject.viewmodel.MyScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainComposeActivity : ComponentActivity() {
     @Inject
-    lateinit var viewModel: ItemFragmentViewModelWithCoroutine
+    lateinit var viewModel: MyScreenViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -41,22 +41,24 @@ class MainComposeActivity : ComponentActivity() {
         }
     }
 
-    private fun handleError(throwable: Throwable) {
+    @Composable
+    private fun HandleError(throwable: Throwable) {
         // show error view
     }
 
     @Composable
-    private fun loadUI(response: Response) {
+    private fun LoadUI(response: Response) {
         response.results?.let { CustomViews.Conversation(messages = it) }
 
     }
 
-    private fun hideLoader() {
+    @Composable
+    private fun HideLoader() {
         // do nothing
     }
 
     @Composable
-    private fun showLoader() {
+    private fun ShowLoader() {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
@@ -81,10 +83,10 @@ class MainComposeActivity : ComponentActivity() {
         }
 
         when (viewState) {
-            is ViewStates.ShowLoader -> showLoader()
-            is ViewStates.HideLoader -> hideLoader()
-            is ViewStates.LoadData -> loadUI((viewState as ViewStates.LoadData).response)
-            is ViewStates.HandleError -> handleError((viewState as ViewStates.HandleError).throwable)
+            is ViewStates.ShowLoader -> ShowLoader()
+            is ViewStates.HideLoader -> HideLoader()
+            is ViewStates.LoadData -> LoadUI((viewState as ViewStates.LoadData).response)
+            is ViewStates.HandleError -> HandleError((viewState as ViewStates.HandleError).throwable)
 
             else -> {
                 // Do nothing or handle other states if needed

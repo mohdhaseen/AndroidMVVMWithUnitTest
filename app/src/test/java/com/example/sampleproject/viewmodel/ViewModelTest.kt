@@ -22,7 +22,7 @@ import org.junit.runners.JUnit4
 class ViewModelTest {
 
     @InjectMockKs
-    private lateinit var viewModel: ItemFragmentViewModelWithCoroutine
+    private lateinit var viewModel: MyScreenViewModel
 
     @RelaxedMockK
     lateinit var stateObserver: Observer<ViewStates>

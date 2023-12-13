@@ -13,8 +13,6 @@ sealed class ViewStates {
 
     object HideLoader : ViewStates()
 
-    object OnCleared : ViewStates()
-
     data class LoadData(val response: Response) : ViewStates()
 
     data class HandleError(val throwable: Throwable) : ViewStates()

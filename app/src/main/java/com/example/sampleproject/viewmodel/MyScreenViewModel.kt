@@ -15,7 +15,7 @@ import javax.inject.Inject
 /**
  * @author Mohd Haseen
  */
-class ItemFragmentViewModelWithCoroutine @Inject constructor(private val repository: Repository) : ViewModel() {
+class MyScreenViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     private val mutableLiveData = MutableLiveData<ViewStates>()
     val liveData: LiveData<ViewStates>
