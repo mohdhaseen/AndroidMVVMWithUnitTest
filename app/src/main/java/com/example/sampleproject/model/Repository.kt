@@ -1,15 +1,22 @@
 package com.example.sampleproject.model
 
-import com.example.sampleproject.model.Response
+import com.example.sampleproject.BuildConfig
+import com.example.sampleproject.network.ApiHandler
 import io.reactivex.Single
+import javax.inject.Inject
 
 /**
  * @author Mohd Haseen
  *
  */
-interface Repository {
+class Repository @Inject constructor() {
+    private val shipmentApi = ApiHandler.API
 
-    fun getMostViewedArticles(): Single<Response>
-    suspend fun getMostViewedArticlesWithCoroutine(): Response
+     fun getMostViewedArticles(): Single<Response> {
+        return shipmentApi.getMostViewedArticles(BuildConfig.API_KEY)
+    }
 
+     suspend fun getMostViewedArticlesWithCoroutine(): Response {
+        return shipmentApi.getMostViewedArticlesWithCoroutine(BuildConfig.API_KEY)
+    }
 }

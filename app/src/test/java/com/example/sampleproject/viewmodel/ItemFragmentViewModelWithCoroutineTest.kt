@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import com.example.sampleproject.ItemFragmentViewState
 import com.example.sampleproject.MainCoroutineRule
 import com.example.sampleproject.model.Response
-import com.example.sampleproject.model.Repository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.InjectMockKs

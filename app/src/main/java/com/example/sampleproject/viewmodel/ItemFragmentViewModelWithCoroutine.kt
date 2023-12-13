@@ -5,16 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sampleproject.ItemFragmentViewState
-import com.example.sampleproject.model.Response
 import com.example.sampleproject.model.Repository
+import com.example.sampleproject.model.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 /**
  * @author Mohd Haseen
  */
-class ItemFragmentViewModelWithCoroutine(private val repository: Repository) : ViewModel() {
+class ItemFragmentViewModelWithCoroutine @Inject constructor(private val repository: Repository) : ViewModel() {
 
     private val mutableLiveData = MutableLiveData<ItemFragmentViewState>()
     val liveData: LiveData<ItemFragmentViewState>

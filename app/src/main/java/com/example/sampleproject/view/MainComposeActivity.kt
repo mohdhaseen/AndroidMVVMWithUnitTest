@@ -23,12 +23,16 @@ import com.example.sampleproject.model.Response
 import com.example.sampleproject.view.ui.theme.SampleTheme
 import com.example.sampleproject.viewmodel.ItemFragmentViewModelFactory
 import com.example.sampleproject.viewmodel.ItemFragmentViewModelWithCoroutine
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainComposeActivity : ComponentActivity() {
-    private lateinit var viewModel: ItemFragmentViewModelWithCoroutine
+    @Inject
+    lateinit var viewModel: ItemFragmentViewModelWithCoroutine
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initViewModel()
+    //    initViewModel()
         setContent {
             SampleTheme {
                 Surface(
