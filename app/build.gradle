@@ -29,6 +29,7 @@ android {
         }
         debug {
             buildConfigField "String", "API_KEY", "\"j0XjaRWTD643A1dfnomojk6ijDpn3NAO\""
+            buildConfigField "String", "BASE_URL", "\"https://api.nytimes.com/\""
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.sampleproject.di
 
+import com.example.sampleproject.api.ApiService
 import com.example.sampleproject.model.Repository
 import dagger.Module
 import dagger.Provides
@@ -12,7 +13,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 object ViewModelModule {
     @Provides
     @ViewModelScoped
-    fun provideRepository(): Repository {
-        return Repository()
+    fun provideRepository(apiService: ApiService): Repository {
+        return Repository(apiService)
     }
 }

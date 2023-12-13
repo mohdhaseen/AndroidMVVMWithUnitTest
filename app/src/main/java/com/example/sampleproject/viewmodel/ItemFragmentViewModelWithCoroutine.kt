@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sampleproject.ItemFragmentViewState
+import com.example.sampleproject.ViewStates
 import com.example.sampleproject.model.Repository
 import com.example.sampleproject.model.Response
 import kotlinx.coroutines.Dispatchers
@@ -17,12 +17,12 @@ import javax.inject.Inject
  */
 class ItemFragmentViewModelWithCoroutine @Inject constructor(private val repository: Repository) : ViewModel() {
 
-    private val mutableLiveData = MutableLiveData<ItemFragmentViewState>()
-    val liveData: LiveData<ItemFragmentViewState>
+    private val mutableLiveData = MutableLiveData<ViewStates>()
+    val liveData: LiveData<ViewStates>
         get() = mutableLiveData
 
     fun getMostViewedArticles() {
-        mutableLiveData.value = ItemFragmentViewState.ShowLoader
+        mutableLiveData.value = ViewStates.ShowLoader
         callApi()
     }
 
@@ -41,13 +41,13 @@ class ItemFragmentViewModelWithCoroutine @Inject constructor(private val reposit
     }
 
     private fun onSuccess(response: Response) {
-        mutableLiveData.value = ItemFragmentViewState.HideLoader
-        mutableLiveData.value = ItemFragmentViewState.LoadData(response)
+        mutableLiveData.value = ViewStates.HideLoader
+        mutableLiveData.value = ViewStates.LoadData(response)
     }
 
     private fun onError(throwable: Throwable?) {
-        mutableLiveData.value = ItemFragmentViewState.HideLoader
-        mutableLiveData.value = throwable?.let { ItemFragmentViewState.HandleError(it) }
+        mutableLiveData.value = ViewStates.HideLoader
+        mutableLiveData.value = throwable?.let { ViewStates.HandleError(it) }
     }
 
 }

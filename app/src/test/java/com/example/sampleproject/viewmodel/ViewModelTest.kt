@@ -2,8 +2,9 @@ package com.example.sampleproject.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.sampleproject.ItemFragmentViewState
+import com.example.sampleproject.ViewStates
 import com.example.sampleproject.MainCoroutineRule
+import com.example.sampleproject.model.Repository
 import com.example.sampleproject.model.Response
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -18,13 +19,13 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class ItemFragmentViewModelWithCoroutineTest {
+class ViewModelTest {
 
     @InjectMockKs
     private lateinit var viewModel: ItemFragmentViewModelWithCoroutine
 
     @RelaxedMockK
-    lateinit var stateObserver: Observer<ItemFragmentViewState>
+    lateinit var stateObserver: Observer<ViewStates>
 
     @RelaxedMockK
     lateinit var repository: Repository
@@ -46,9 +47,9 @@ class ItemFragmentViewModelWithCoroutineTest {
         val response = Response(status = "success")
         coEvery { repository.getMostViewedArticlesWithCoroutine() } returns response
         viewModel.getMostViewedArticles()
-        verify { stateObserver.onChanged(ItemFragmentViewState.ShowLoader)}
-        verify { stateObserver.onChanged(ItemFragmentViewState.HideLoader)}
-        Assert.assertEquals(viewModel.liveData.value, ItemFragmentViewState.LoadData(response))
+        verify { stateObserver.onChanged(ViewStates.ShowLoader)}
+        verify { stateObserver.onChanged(ViewStates.HideLoader)}
+        Assert.assertEquals(viewModel.liveData.value, ViewStates.LoadData(response))
     }
 
     @Test
@@ -56,9 +57,9 @@ class ItemFragmentViewModelWithCoroutineTest {
         val exception = Exception()
         coEvery { repository.getMostViewedArticlesWithCoroutine() }.throws(exception)
         viewModel.getMostViewedArticles()
-        verify { stateObserver.onChanged(ItemFragmentViewState.ShowLoader)}
-        verify { stateObserver.onChanged(ItemFragmentViewState.HideLoader)}
-        Assert.assertEquals(viewModel.liveData.value, ItemFragmentViewState.HandleError(exception))
+        verify { stateObserver.onChanged(ViewStates.ShowLoader)}
+        verify { stateObserver.onChanged(ViewStates.HideLoader)}
+        Assert.assertEquals(viewModel.liveData.value, ViewStates.HandleError(exception))
     }
 
 }
