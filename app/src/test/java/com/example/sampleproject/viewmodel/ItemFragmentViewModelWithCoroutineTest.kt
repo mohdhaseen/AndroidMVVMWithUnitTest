@@ -52,14 +52,14 @@ class ItemFragmentViewModelWithCoroutineTest {
         Assert.assertEquals(viewModel.liveData.value, ItemFragmentViewState.LoadData(response))
     }
 
-    /*@Test
+    @Test
     fun loadDataWithError() {
-        val response = Exception()
-        coEvery { repository.getMostViewedArticlesWithCoroutine() } returns response
+        val exception = Exception()
+        coEvery { repository.getMostViewedArticlesWithCoroutine() }.throws(exception)
         viewModel.getMostViewedArticles()
         verify { stateObserver.onChanged(ItemFragmentViewState.ShowLoader)}
         verify { stateObserver.onChanged(ItemFragmentViewState.HideLoader)}
-        Assert.assertEquals(viewModel.liveData.value, ItemFragmentViewState.HandleError(response))
-    }*/
+        Assert.assertEquals(viewModel.liveData.value, ItemFragmentViewState.HandleError(exception))
+    }
 
 }
