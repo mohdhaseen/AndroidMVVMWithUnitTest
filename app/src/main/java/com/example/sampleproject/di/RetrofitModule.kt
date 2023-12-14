@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RetrofitModule {
+object RetrofitModule {
     @Provides
     fun provideBaseUrl(): String {
         return BuildConfig.BASE_URL

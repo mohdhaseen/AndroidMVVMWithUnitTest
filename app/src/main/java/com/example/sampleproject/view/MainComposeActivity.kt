@@ -3,6 +3,7 @@ package com.example.sampleproject.view
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,8 +26,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainComposeActivity : ComponentActivity() {
-    @Inject
-    lateinit var viewModel: MyScreenViewModel
+     private val viewModel: MyScreenViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

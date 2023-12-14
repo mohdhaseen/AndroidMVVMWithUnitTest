@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.sampleproject.ViewStates
 import com.example.sampleproject.model.Repository
 import com.example.sampleproject.model.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -15,6 +16,7 @@ import javax.inject.Inject
 /**
  * @author Mohd Haseen
  */
+@HiltViewModel
 class MyScreenViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     private val mutableLiveData = MutableLiveData<ViewStates>()
